@@ -1,0 +1,126 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+    padding:30px;
+}
+
+.container{
+    width:900px;
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+.budget,
+.expense-form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+    margin-bottom:20px;
+}
+
+input,
+select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+button{
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+h2{
+    margin:15px 0;
+    color:#444;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table th{
+    background:#007bff;
+    color:white;
+    padding:12px;
+}
+
+table td{
+    padding:10px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+.editBtn{
+    background:#28a745;
+    margin-right:5px;
+}
+
+.deleteBtn{
+    background:#dc3545;
+}
+
+.editBtn:hover{
+    background:#218838;
+}
+
+.deleteBtn:hover{
+    background:#b02a37;
+}
+
+canvas{
+    margin-top:30px;
+    max-height:350px;
+}
+
+@media(max-width:768px){
+
+.container{
+    width:100%;
+}
+
+.budget,
+.expense-form{
+    grid-template-columns:1fr;
+}
+
+table{
+    font-size:14px;
+}
+
+button{
+    width:100%;
+}
+
+}
