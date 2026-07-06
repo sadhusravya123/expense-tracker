@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>💰 Expense Tracker</h1>
+
+<div class="budget">
+
+<input
+type="number"
+id="budget"
+placeholder="Enter Budget">
+
+<button onclick="setBudget()">
+Set Budget
+</button>
+
+</div>
+
+<div class="expense-form">
+
+<input
+type="text"
+id="expenseName"
+placeholder="Expense Name">
+
+<input
+type="number"
+id="expenseAmount"
+placeholder="Amount">
+
+<select id="category">
+
+<option>Food</option>
+
+<option>Travel</option>
+
+<option>Shopping</option>
+
+<option>Education</option>
+
+<option>Entertainment</option>
+
+<option>Bills</option>
+
+<option>Others</option>
+
+</select>
+
+<input
+type="date"
+id="expenseDate">
+
+<button onclick="addExpense()">
+Add Expense
+</button>
+
+</div>
+
+<h2 id="budgetLeft">
+Budget Left : ₹0
+</h2>
+
+<h2 id="monthlyTotal">
+Monthly Expense : ₹0
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Amount</th>
+
+<th>Category</th>
+
+<th>Date</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="expenseTable">
+
+</tbody>
+
+</table>
+
+<canvas id="expenseChart"></canvas>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
