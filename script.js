@@ -1,9 +1,21 @@
-let expenses = [];
-let budget = 0;
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+let budget = Number(localStorage.getItem("budget")) || 0;
 let chart;
+
+document.getElementById("budget").value = budget;
+
+displayExpenses();
+updateSummary();
+updateChart();
+
+function saveData() {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+    localStorage.setItem("budget", budget);
+}
 
 function setBudget() {
     budget = Number(document.getElementById("budget").value);
+    saveData();
     updateSummary();
 }
 
@@ -14,7 +26,7 @@ function addExpense() {
     const category = document.getElementById("category").value;
     const date = document.getElementById("expenseDate").value;
 
-    if (name === "" || amount <= 0 || date === "") {
+    if(name==="" || amount<=0 || date===""){
         alert("Please fill all fields.");
         return;
     }
@@ -26,21 +38,23 @@ function addExpense() {
         date
     });
 
+    saveData();
     clearInputs();
     displayExpenses();
     updateSummary();
     updateChart();
+
 }
 
-function displayExpenses() {
+function displayExpenses(){
 
-    const table = document.getElementById("expenseTable");
+    const table=document.getElementById("expenseTable");
 
-    table.innerHTML = "";
+    table.innerHTML="";
 
-    expenses.forEach((expense, index) => {
+    expenses.forEach((expense,index)=>{
 
-        table.innerHTML += `
+        table.innerHTML+=`
         <tr>
 
         <td>${expense.name}</td>
@@ -53,13 +67,11 @@ function displayExpenses() {
 
         <td>
 
-        <button class="editBtn"
-        onclick="editExpense(${index})">
+        <button class="editBtn" onclick="editExpense(${index})">
         Edit
         </button>
 
-        <button class="deleteBtn"
-        onclick="deleteExpense(${index})">
+        <button class="deleteBtn" onclick="deleteExpense(${index})">
         Delete
         </button>
 
@@ -72,87 +84,100 @@ function displayExpenses() {
 
 }
 
-function deleteExpense(index) {
+function deleteExpense(index){
 
-    expenses.splice(index, 1);
+    expenses.splice(index,1);
 
+    saveData();
     displayExpenses();
     updateSummary();
     updateChart();
 
 }
 
-function editExpense(index) {
+function editExpense(index){
 
-    const expense = expenses[index];
+    const expense=expenses[index];
 
-    document.getElementById("expenseName").value = expense.name;
-    document.getElementById("expenseAmount").value = expense.amount;
-    document.getElementById("category").value = expense.category;
-    document.getElementById("expenseDate").value = expense.date;
+    document.getElementById("expenseName").value=expense.name;
+    document.getElementById("expenseAmount").value=expense.amount;
+    document.getElementById("category").value=expense.category;
+    document.getElementById("expenseDate").value=expense.date;
 
-    expenses.splice(index, 1);
+    expenses.splice(index,1);
 
+    saveData();
     displayExpenses();
     updateSummary();
     updateChart();
 
 }
 
-function updateSummary() {
+function updateSummary(){
 
-    let total = 0;
+    let total=0;
 
-    expenses.forEach(expense => {
+    expenses.forEach(expense=>{
 
-        total += expense.amount;
+        total+=expense.amount;
 
     });
 
-    document.getElementById("monthlyTotal").innerHTML =
-        "Monthly Expense : ₹" + total;
+    document.getElementById("monthlyTotal").innerHTML=
+    "Monthly Expense : ₹"+total;
 
-    document.getElementById("budgetLeft").innerHTML =
-        "Budget Left : ₹" + (budget - total);
+    const left=budget-total;
+
+    if(left>=0){
+
+        document.getElementById("budgetLeft").innerHTML=
+        "Budget Left : ₹"+left;
+
+    }else{
+
+        document.getElementById("budgetLeft").innerHTML=
+        "⚠ Budget Exceeded by ₹"+Math.abs(left);
+
+    }
 
 }
 
-function updateChart() {
+function updateChart(){
 
-    const totals = {};
+    const totals={};
 
-    expenses.forEach(expense => {
+    expenses.forEach(expense=>{
 
-        if (!totals[expense.category]) {
-            totals[expense.category] = 0;
+        if(!totals[expense.category]){
+
+            totals[expense.category]=0;
+
         }
 
-        totals[expense.category] += expense.amount;
+        totals[expense.category]+=expense.amount;
 
     });
 
-    const labels = Object.keys(totals);
-    const data = Object.values(totals);
+    const labels=Object.keys(totals);
+    const data=Object.values(totals);
 
-    if (chart) {
+    if(chart){
 
         chart.destroy();
 
     }
 
-    const ctx = document.getElementById("expenseChart");
+    chart=new Chart(document.getElementById("expenseChart"),{
 
-    chart = new Chart(ctx, {
+        type:"pie",
 
-        type: "pie",
+        data:{
 
-        data: {
+            labels:labels,
 
-            labels: labels,
+            datasets:[{
 
-            datasets: [{
-
-                data: data
+                data:data
 
             }]
 
@@ -162,11 +187,11 @@ function updateChart() {
 
 }
 
-function clearInputs() {
+function clearInputs(){
 
-    document.getElementById("expenseName").value = "";
-    document.getElementById("expenseAmount").value = "";
-    document.getElementById("expenseDate").value = "";
-    document.getElementById("category").selectedIndex = 0;
+    document.getElementById("expenseName").value="";
+    document.getElementById("expenseAmount").value="";
+    document.getElementById("expenseDate").value="";
+    document.getElementById("category").selectedIndex=0;
 
 }
